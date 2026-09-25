@@ -1,0 +1,21 @@
+{
+  "name": "frontdex-workspace",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "postinstall": "npm install --prefix Frontdex",
+    "dev": "concurrently -k -n API,WEB \"npm run dev:api\" \"npm run dev:web\"",
+    "dev:api": "node backend/dev-server.js",
+    "dev:web": "npm --prefix Frontdex run dev -- --host 0.0.0.0",
+    "check:backend": "node --check api/index.js && node --check backend/app-state-service.js && node --check backend/auth-service.js && node --check backend/config.js && node --check backend/db.js && node --check backend/dev-server.js && node --check backend/entity-service.js && node --check backend/http.js && node --check backend/rate-limit.js && node --check backend/seed.js && node --check backend/server.js && node --check backend/validation.js",
+    "test:backend": "node --test --test-isolation=none backend/validation.test.js Frontdex/SRC/utils/appData.test.js Frontdex/SRC/utils/businessMetrics.test.js Frontdex/SRC/utils/domainOperations.test.js",
+    "check": "npm run check:backend && npm run test:backend && npm run build",
+    "build": "npm --prefix Frontdex run build",
+    "preview": "npm --prefix Frontdex run preview"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
+    "concurrently": "^10.0.3",
+    "dotenv": "^17.4.2"
+  }
+}
